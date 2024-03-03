@@ -1,20 +1,50 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import {ref} from 'vue';
+import HelloWorld from './components/HelloWorld.vue';
+import User from './components/User.vue';
+
+const deleteOrdered = (name) => {
+  users.value = users.value.filter(u => u.name !== name);
+  // console.log(name);
+}
+
+const clicked = (e) => {
+  users.value.push({
+    name: "friend"+(Math.random()*1000).toString().substring(0,3),
+    email: "aaa@bbb.ccc"
+  })
+  console.log(e);
+}
+
+const users = ref([]);
+
+users.value.push(
+
+  {
+    name:"Taro Uesugi",
+    email:"taro@bbb.com"
+   },
+   {
+    name:"Jiro Toyotomi",
+    email:"jiro@bbb.com"
+   },
+   {
+    name:"Saburo Sakanoue",
+    email:"sab@bbb.com"
+   },
+
+);
+
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <span>
+  <!-- <span>
     <HelloWorld msg="Vite + Vue!" />
-    <HelloWorld msg="How are you?" />
-  </span>
+  </span> -->
+  <button @click="clicked">New user</button>
+  <div style="display: flex; flex-wrap: wrap;">
+    <User v-for="us in users" :name="us.name" :email="us.email" @deleting="deleteOrdered"></User>
+  </div>
 </template>
 
 <style scoped>
